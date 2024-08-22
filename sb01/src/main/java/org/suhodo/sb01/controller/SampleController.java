@@ -5,6 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Arrays;
+import java.util.List;
+
 /* Facade 패턴
 FrontController - PageController의 이중 구조
 FrontController : tomcat에서 데이터를 우선 처리/공통 처리하는 부분
@@ -29,5 +32,12 @@ public class SampleController {
 
         // templates/hello.html로 아래 데이터 전달
         model.addAttribute("msg", "HELLO WORLD");
+    }
+
+    @GetMapping("/ex/ex1")
+    public void ex1(Model model){
+        List<String> list = Arrays.asList("AAA", "BBB", "CCC", "DDD");
+
+        model.addAttribute("list", list);
     }
 }
