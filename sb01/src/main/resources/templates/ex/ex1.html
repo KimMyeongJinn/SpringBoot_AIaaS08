@@ -5,6 +5,25 @@
     <title>Title</title>
 </head>
 <body>
+    <!--/*    반복문 */-->
+    <ul>
+        <li th:each="str: ${list}" th:text="${str}"></li>
+    </ul>
+
+    <ul>
+        <th:block th:each="str: ${list}">
+            <li>[[${str}]]</li>
+        </th:block>
+    </ul>
+
+    <!--/*    임시 변수 선언 */-->
+    <div th:with="num1 = ${10}, num2 = ${20}">
+        <h4 th:text="${num1 + num2}"></h4>
+    </div>
+
+    <!--/*    <h1 th:text="${list[0]}"></h1> */-->
+
+    <!--/*    변수값 출력 */-->
     <h4>[[${list}]]</h4>
     <hr/>
     <h4 th:text="${list}"></h4>
