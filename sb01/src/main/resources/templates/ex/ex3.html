@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{layout/layout1.html}">
+<!--/*
+layout/layout1.html을 기본으로 해서
+아래 content영역을 찾아서
+아래 내용으로 layout1.html을 덮어쓴다.
+*/-->
+
+<div layout:fragment="content">
+    <h1>ex3.html</h1>
+</div>
+
+<script layout:fragment="script" th:inline="javascript">
+    const arr = [[${arr}]]
+    console.log("arr=" + arr);
+</script>

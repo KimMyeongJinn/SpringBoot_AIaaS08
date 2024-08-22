@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{layout/layout1.html}">
+<!--/*
+layout/layout1.html을 기본으로 해서
+아래 content영역을 찾아서
+아래 내용으로 layout1.html을 덮어쓴다.
+*/-->
+
+<div layout:fragment="content">
+    <h1>[[${iu}]]</h1>
+    <img src="https://i.namu.wiki/i/2XqSZrUH5Ns5rNQPqI8mSAsZDlFg6tLVgjzfNDwbtf9GKXK5l6mGm-KSFCHcz3aAz1gaWXzMsiQSsPFDjMzZEvbJ9XdG3w5ICXI4SioaQ4FBn6u49hg3mH28Wj8nP_vH3plGg-CzkW5QqvseHDQfPQ.webp"
+        width="300"/>
+</div>
