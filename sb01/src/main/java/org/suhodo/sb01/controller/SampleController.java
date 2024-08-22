@@ -40,4 +40,31 @@ public class SampleController {
 
         model.addAttribute("list", list);
     }
+
+    class SampleDTO{
+        private String p1, p2, p3;
+
+        public String getP1() {
+            return p1;
+        }
+
+        public String getP2() {
+            return p2;
+        }
+
+        public String getP3() {
+            return p3;
+        }
+    }
+
+    @GetMapping("/ex/ex2")
+    public void ex2(Model model){
+        log.info("ex/ex2....................");
+    }
 }
+
+
+
+
+
+
