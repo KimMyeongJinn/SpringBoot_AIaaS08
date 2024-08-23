@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.suhodo.sb01.domain.Board;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -28,4 +29,53 @@ public class BoardRepositoryTests {
             log.info("BNO: " + result.getBno());
         });
     }
+
+    @Test
+    public void testSelect(){
+        Long bno = 100L;
+
+        Optional<Board> result = boardRepository.findById(bno);
+
+        // 데이터 객체가 존재하면 정상 반환, 아니면 예외처리
+        Board board = result.orElseThrow();
+
+        log.info(board);
+    }
+
+    @Test
+    public void testUpdate(){
+        Long bno = 100L;
+
+        Optional<Board> result = boardRepository.findById(bno);
+
+        Board board = result.orElseThrow();
+
+        board.change("update..title 100", "update content 100");
+
+        /* board 객체의 값이 새로운 값이면 insert 문 호출
+           board 객체의 값이 갱신이면 update 문 호출
+        * */
+        boardRepository.save(board);
+    }
+
+    @Test
+    public void testDelete(){
+        Long bno = 1L;
+
+        boardRepository.deleteById(bno);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
