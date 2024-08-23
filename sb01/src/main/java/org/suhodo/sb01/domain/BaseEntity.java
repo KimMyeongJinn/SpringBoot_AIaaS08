@@ -21,13 +21,13 @@ import java.time.LocalDateTime;
 @EntityListeners(value = {AuditingEntityListener.class})
 @Getter
 abstract class BaseEntity {
-    // 처음 엔티티(테이블)이 생성될 때 시간을 저장한다.
+    // 처음 행의 데이터가 생성될 때 시간을 저장한다.
     // 이후에는 변경되지 않는다.
     @CreatedDate
     @Column(name = "regdate", updatable = false)
     private LocalDateTime regDate;
 
-    // 엔티티(테이블)의 데이터가 변경될 때 마다 시간을 기록한다.
+    // 데이터가 변경될 때 마다 시간을 기록한다.
     @LastModifiedDate
     @Column(name = "moddate")
     private LocalDateTime modDate;
