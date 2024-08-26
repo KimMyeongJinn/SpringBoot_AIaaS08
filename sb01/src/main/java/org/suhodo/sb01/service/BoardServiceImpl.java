@@ -6,6 +6,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.suhodo.sb01.domain.Board;
 import org.suhodo.sb01.dto.BoardDTO;
+import org.suhodo.sb01.dto.PageRequestDTO;
+import org.suhodo.sb01.dto.PageResponseDTO;
 import org.suhodo.sb01.repository.BoardRepository;
 
 import javax.transaction.Transactional;
@@ -66,6 +68,11 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public void remove(Long bno) {
         boardRepository.deleteById(bno);
+    }
+
+    @Override
+    public PageResponseDTO<BoardDTO> list(PageRequestDTO pageRequestDTO) {
+        return null;
     }
 }
 
