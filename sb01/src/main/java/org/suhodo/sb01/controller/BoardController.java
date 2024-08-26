@@ -6,7 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.suhodo.sb01.dto.BoardDTO;
 import org.suhodo.sb01.dto.PageRequestDTO;
+import org.suhodo.sb01.dto.PageResponseDTO;
 import org.suhodo.sb01.service.BoardService;
 
 @Controller
@@ -20,6 +22,10 @@ public class BoardController {
     // /board/list
     @GetMapping("/list")
     public void list(PageRequestDTO pageRequestDTO, Model model){
+        PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
 
+        log.info(responseDTO);
+
+        model.addAttribute("responseDTO", responseDTO);
     }
 }
