@@ -102,6 +102,20 @@ public class BoardRepositoryTests {
 
         todoList.forEach(board -> log.info(board));
     }
+
+    @Test
+    public void testTime(){
+        String time = boardRepository.getTime();
+
+        log.info(time);
+    }
+
+    @Test
+    public void testSearch1(){
+        Pageable pageable = PageRequest.of(1, 10, Sort.by("bno").descending());
+
+        boardRepository.search1(pageable);
+    }
 }
 
 
