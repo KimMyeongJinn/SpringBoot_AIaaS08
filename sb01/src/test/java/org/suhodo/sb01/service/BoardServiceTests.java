@@ -27,4 +27,29 @@ public class BoardServiceTests {
 
         log.info("bno: " + bno);
     }
+
+    @Test
+    public void testReadOne(){
+        Long bno = 101L;
+
+        BoardDTO boardDTO = boardService.readOne(bno);
+
+        log.info(boardDTO);
+    }
+
+    @Test
+    public void testModify(){
+        BoardDTO boardDTO = BoardDTO.builder()
+                .bno(101L)
+                .title("Updated... 101")
+                .content("Updated Content 101...")
+                .build();
+
+        boardService.modify(boardDTO);
+    }
+
+    @Test
+    public void testDelete(){
+        boardService.remove(100L);
+    }
 }
