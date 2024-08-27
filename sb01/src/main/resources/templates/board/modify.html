@@ -89,6 +89,16 @@
         formObj.method = 'post';
         formObj.submit();
     }, false);
+
+    // 삭제 버튼 동작
+    document.querySelector(".removeBtn").addEventListener("click", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+
+        formObj.action = '/board/remove';
+        formObj.method = 'post';
+        formObj.submit();
+    }, false);
 </script>
 
 
