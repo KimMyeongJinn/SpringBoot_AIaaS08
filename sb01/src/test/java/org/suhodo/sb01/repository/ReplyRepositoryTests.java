@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
 import org.suhodo.sb01.domain.Board;
 import org.suhodo.sb01.domain.Reply;
 
@@ -20,7 +21,7 @@ public class ReplyRepositoryTests {
 
     @Test
     public void testInsert(){
-        Long bno = 101L;
+        Long bno = 201L;
 
         Board board = Board.builder()
                         .bno(bno)
@@ -36,6 +37,15 @@ public class ReplyRepositoryTests {
         replyRepository.save(reply);
     }
 
+    /* @Transactional을 넣지 않으면
+    Reply정보를 요청하고 Session이 끊어진다.
+    다시 Reply내부의 필드인 Board를 요청하려고 할 때
+    Session이 끊어졌으므로 요청을 할 수 없다.
+
+    그래서 @Transactional을 넣어주면 메서드 종료될 때까지
+    Session이 유지된다.
+    * */
+    @Transactional
     @Test
     public void testBoardReplies(){
         Long bno = 101L;
@@ -45,7 +55,7 @@ public class ReplyRepositoryTests {
         Page<Reply> result = replyRepository.listOfBoard(bno, pageable);
 
         result.getContent().forEach(reply -> {
-            log.info(reply);
+            log.info(reply);            // reply.ToString();
         });
     }
 }
