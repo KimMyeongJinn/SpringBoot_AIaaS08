@@ -29,6 +29,7 @@ public class BoardController {
     public void list(PageRequestDTO pageRequestDTO, Model model){
         PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
 
+
         log.info(responseDTO);
 
         model.addAttribute("responseDTO", responseDTO);
@@ -59,6 +60,15 @@ public class BoardController {
         redirectAttributes.addFlashAttribute("result", bno);
 
         return "redirect:/board/list";
+    }
+
+    @GetMapping("/read")
+    public void read(Long bno, PageRequestDTO pageRequestDTO, Model model){
+        BoardDTO boardDTO = boardService.readOne(bno);
+
+        log.info(boardDTO);
+
+        model.addAttribute("dto", boardDTO);
     }
 }
 
