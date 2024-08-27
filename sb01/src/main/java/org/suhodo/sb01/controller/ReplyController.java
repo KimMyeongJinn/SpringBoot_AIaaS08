@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.suhodo.sb01.dto.ReplyDTO;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 @RestController
@@ -19,7 +20,7 @@ public class ReplyController {
 
     @ApiOperation(value = "Replies POST", notes = "POST 방식으로 댓글 등록")
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, Long>> register(@RequestBody ReplyDTO replyDTO){
+    public ResponseEntity<Map<String, Long>> register(@Valid @RequestBody ReplyDTO replyDTO){
         log.info(replyDTO);
 
         Map<String, Long> resultMap = Map.of("rno", 111L);

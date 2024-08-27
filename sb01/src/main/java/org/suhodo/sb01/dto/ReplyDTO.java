@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
@@ -13,8 +15,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ReplyDTO {
     private Long rno;                           // 댓글 번호(자식)
+
+    @NotNull
     private Long bno;                           // 게시판 글 번호(부모)
+
+    @NotEmpty
     private String replyText;                   // 댓글
+
+    @NotEmpty
     private String replyer;                     // 댓글 작성자
-    private LocalDateTime regDate, modDate;     // 처음 등록 시간, 수정 시간 
+
+    private LocalDateTime regDate, modDate;     // 처음 등록 시간, 수정 시간
 }
