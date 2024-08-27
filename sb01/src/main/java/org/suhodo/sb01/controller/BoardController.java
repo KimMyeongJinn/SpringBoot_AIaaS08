@@ -70,6 +70,33 @@ public class BoardController {
 
         model.addAttribute("dto", boardDTO);
     }
+
+    @PostMapping("/modify")
+    public String modify(PageRequestDTO pageRequestDTO,
+                        @Valid BoardDTO boardDTO,
+                        BindingResult bindingResult, RedirectAttributes redirectAttributes){
+        log.info("board modify post............." + boardDTO);
+
+        if(bindingResult.hasErrors()){
+            log.info("has errors.............");
+
+            String link = pageRequestDTO.getLink();
+
+            // redirect시 1회성으로 꺼내는 값
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            
+            // redirect시 상시 꺼낼 수 있는 값
+            redirectAttributes.addAttribute("bno", boardDTO.getBno());
+
+            return "redirect:/board/modify?" + link;
+        }
+
+        boardService.modify(boardDTO);
+        redirectAttributes.addFlashAttribute("result", "modified");
+        redirectAttributes.addAttribute("bno", boardDTO.getBno());
+
+        return "redirect:/board/read";
+    }
 }
 
 

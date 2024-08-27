@@ -65,5 +65,43 @@
 </div>
 
 <script layout:fragment="script" th:inline="javascript">
+    const errors = [[${errors}]]
+    console.log(errors);
 
+    let errorMsg = '';
+    if(errors){
+        for(let i=0;i<errors.length;i++){
+            errorMsg += `${errors[i].field}은(는) ${errors[i].code} \n`
+        }
+        history.replaceState({}, null, null);
+        alert(errorMsg);
+    }
+
+    // Modify버튼 이벤트 처리 부분
+    const link = [[${pageRequestDTO.getLink()}]];
+    const formObj = document.querySelector("#f1");
+
+    document.querySelector(".modBtn").addEventListener("click", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+
+        formObj.action = `/board/modify?${link}`;
+        formObj.method = 'post';
+        formObj.submit();
+    }, false);
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
