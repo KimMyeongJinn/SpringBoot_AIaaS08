@@ -33,7 +33,6 @@ public class ReplyRepositoryTests {
                 .replyText("댓글......")
                 .replyer("replyer1")
                 .build();
-
         replyRepository.save(reply);
     }
 

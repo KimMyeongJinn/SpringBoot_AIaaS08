@@ -52,9 +52,24 @@
                 <button type="button" class="btn btn-secondary">Modify</button>
               </a>
             </div>
-          </div>
-        </div>
+          </div>   <!-- my-4 -->
+        </div>   <!-- card-body -->
+      </div>   <!-- card -->
+    </div>   <!-- col -->
+  </div>   <!-- row -->
+
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <div class="my-4">
+        <button class="btn btn-info addReplyBtn">ADD REPLY</button>
       </div>
+      <ul class="list-group replyList"></ul>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col">
+      <ul class="pagination replyPaging"></ul>
     </div>
   </div>
 
@@ -66,5 +81,70 @@
 
 <script layout:fragment="script" th:inline="javascript">
   const bno = [[${dto.bno}]];
-  get1(bno);
+
+  // get1을 바로 호출해서 반환값을 받으면
+  // 통신이 완료되지 않았으므로, json이 아니라 Promise객체가 리턴된다.
+  // console.log(get1(bno));
+
+  // Promise객체의 then함수에 callback함수를 등록해 놓는다.
+  /*
+  get1(bno).then(data => {
+    // 비동기 통신의 완료되면 이 callback함수가 호출된다.
+    console.log(data);
+  }).catch(e => {
+    console.error(e);
+  });
+  */
+
+  const replyList = document.querySelector('.replyList');
+  const replyPaging = document.querySelector('.replyPaging');
+
+  // 댓글 추가
+  function printList(dtoList){
+    let str = '';
+
+    if(dtoList && dtoList.length > 0){
+      for(const dto of dtoList){
+        str += `<li class="list-group-item d-flex replyItem">
+                <span class="col-2">${dto.rno}</span>
+                <span class="col-6" data-rno="${dto.rno}">${dto.replyText}</span>
+                <span class="col-2">${dto.replyer}</span>
+                <span class="col-2">${dto.regDate}</span>
+                </li>`;
+      }
+    }
+    replyList.innerHTML = str;
+  }
+
+  // 페이지 목록 출력
+  function printPages(data){
+    let pageStr = '';
+
+    if(data.prev){
+      pageStr += `<li class="page-item"><a class="page-link" data-page="${data.start - 1}">PREV</a></li>`;
+    }
+    for(let i = data.start; i<= data.end; i++){
+      pageStr += `<li class="page-item ${i == data.page ? "active" : ""} "><a class="page-link" data-page="${i}">${i}</a></li>`;
+    }
+    if(data.next){
+      pageStr += `<li class="page-item"><a class="page-link" data-page="${data.end + 1}">NEXT</a></li>`;
+    }
+    replyPaging.innerHTML = pageStr;
+  }
+
+  // 서버에 댓글 json 데이터 요청
+  function printReplies(page, size, goLast){
+    getList({bno, page, size, goLast}).then(
+            data => {
+              printList(data.dtoList);
+              printPages(data);
+            }
+    ).catch(e => {
+      console.error(e);
+    });
+  }
+
+  printReplies(1, 10);
+
+
 </script>
