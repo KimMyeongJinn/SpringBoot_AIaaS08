@@ -57,8 +57,14 @@
       </div>
     </div>
   </div>
-</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <script src="/js/reply.js"></script>
+
+</div>    <!-- layout fragment end -->
 
 <script layout:fragment="script" th:inline="javascript">
-
+  const bno = [[${dto.bno}]];
+  get1(bno);
 </script>
