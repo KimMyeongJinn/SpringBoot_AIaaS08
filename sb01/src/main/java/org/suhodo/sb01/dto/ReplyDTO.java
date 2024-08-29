@@ -1,5 +1,7 @@
 package org.suhodo.sb01.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,5 +27,10 @@ public class ReplyDTO {
     @NotEmpty
     private String replyer;                     // 댓글 작성자
 
-    private LocalDateTime regDate, modDate;     // 처음 등록 시간, 수정 시간
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime regDate;              // 처음 등록 시간
+
+    // json 전송시 제외한다
+    @JsonIgnore
+    private LocalDateTime modDate;              // 수정 시간
 }
