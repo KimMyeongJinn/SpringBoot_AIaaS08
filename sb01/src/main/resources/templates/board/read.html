@@ -318,6 +318,21 @@
     modifyModal.hide();
   }, false);
 
+  removeBtn.addEventListener("click", function(e){
+    const rno = replyHeader.innerHTML;
+    removeReply(rno).then(result => {
+      alert(result.rno + ' 댓글이 삭제되었습니다.');
+      replyText.value = '';
+      modifyModal.hide();
+
+      page = 1;
+
+      printReplies(page, size);
+    }).catch(e => {
+      console.log(e);
+    })
+  }, false);
+
 
   //****************** 댓글 조회/수정/삭제 end ******************//
 
