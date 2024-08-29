@@ -106,8 +106,12 @@
 </div>    <!-- layout fragment end -->
 
 <script layout:fragment="script" th:inline="javascript">
-  const bno = [[${dto.bno}]];
 
+  //****************** 게시글 번호 가져오기 begin******************//
+  const bno = [[${dto.bno}]];
+  //******************게시글 번호 가져오기 end******************//
+
+  //****************** axios 테스트 하기 begin******************//
   // get1을 바로 호출해서 반환값을 받으면
   // 통신이 완료되지 않았으므로, json이 아니라 Promise객체가 리턴된다.
   // console.log(get1(bno));
@@ -121,7 +125,9 @@
     console.error(e);
   });
   */
+  //****************** axios 테스트 하기 end ******************//
 
+  //****************** 댓글 가져와서 보여주기, 댓글 페이징 처리 begin ******************//
   const replyList = document.querySelector('.replyList');
   const replyPaging = document.querySelector('.replyPaging');
 
@@ -172,7 +178,9 @@
 
   // 서버로 댓글 json 요청
   printReplies(1, 10, true);
+  //****************** 댓글 가져와서 보여주기, 댓글 페이징 처리 end ******************//
 
+  //****************** 댓글 등록하기 begin ******************//
   // 댓글 등록 모달창
   const registerModal = new bootstrap.Modal(document.querySelector('.registerModal'));
   // 댓글 등록 모달 내부의 요소
@@ -207,6 +215,6 @@
       alert("Exception...");
     })
   }, false);
-
+  //****************** 댓글 등록하기 end ******************//
 
 </script>
