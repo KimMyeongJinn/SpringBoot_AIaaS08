@@ -217,4 +217,28 @@
   }, false);
   //****************** 댓글 등록하기 end ******************//
 
+  //****************** 댓글 페이지 번호 이동 begin ******************//
+  let page = 1;
+  let size = 10;
+
+  replyPaging.addEventListener("click", function(e){
+    e.preventDefault();         // <a>태그의 화면 reload 하지 못하게 기본 기능 막기
+    e.stopPropagation();        // 이벤트를 받았으니 더 이상 이벤트 버블링(부모요소로 이벤트 전달) 중지
+
+    const target = e.target;    // 이벤트 발생 자식 요소
+
+    // target이 null이거나 이벤트 발생 자식 요소가 <a>가 아니면 중지
+    // <a>이면 통과해서 계속 진행
+    if(!target || target.tagName != 'A'){
+      return;
+    }
+
+    const pageNum = target.getAttribute("data-page");
+    page = pageNum;
+    printReplies(page, size);
+
+  }, false);
+
+  //****************** 댓글 페이지 번호 이동 end ******************//
+
 </script>
