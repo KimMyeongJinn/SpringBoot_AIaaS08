@@ -8,11 +8,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
 import org.suhodo.sb01.domain.Board;
 import org.suhodo.sb01.dto.BoardListReplyCountDTO;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -21,6 +24,9 @@ public class BoardRepositoryTests {
 
     @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
+    private ReplyRepository replyRepository;
 
     @Test
     public void testInsert(){
@@ -150,6 +156,70 @@ public class BoardRepositoryTests {
 
         result.getContent().forEach(board -> log.info(board));
     }
+
+    @Test
+    public void testInsertWithImages(){
+        Board board = Board.builder()
+                .title("Image Test")
+                .content("첨부파일 테스트")
+                .writer("tester")
+                .build();
+
+        for(int i=0;i<3;i++)
+            board.addImage(UUID.randomUUID().toString(), "file" + i + ".jpg");
+
+        boardRepository.save(board);
+    }
+
+    @Test
+    public void testReadWithImages(){
+        /* Board에서 imageSet에 Lazy설정을 했으므로
+        Board만 조회하고 DBMS와 Session이 종료된다.
+        그러므로 board.getImageSet()을 호출하면 에러가 발생한다.
+        * */
+//        Optional<Board> result = boardRepository.findById(310L);
+
+        /* JPQL로 추가한 메서드로
+        @EntityGraph설정에 imageSet을 가져오도록 했으므로
+        board테이블의 정보와 BoardImage테이블의 정보 모두 조회한다.
+        * */
+        Optional<Board> result = boardRepository.findByIdWithImages(311L);
+
+        Board board = result.orElseThrow();
+
+        log.info(board);;
+        log.info("--------------------------");
+        log.info(board.getImageSet());
+    }
+
+    @Transactional
+    @Commit
+    @Test
+    public void testModifyImages(){
+        Optional<Board> result = boardRepository.findByIdWithImages(311L);
+
+        Board board = result.orElseThrow();
+
+        board.clearImages();        // 기존 첨부 파일 모두 삭제
+
+        // 새로운 파일 추가
+        for(int i=0;i<2;i++)
+            board.addImage(UUID.randomUUID().toString(), "updatefile" + i + ".jpg");
+
+        boardRepository.save(board);
+    }
+
+    @Test
+    @Transactional
+    @Commit
+    public void testRemoveAll(){
+        Long bno = 311L;
+
+        replyRepository.deleteByBoard_Bno(bno);
+
+        boardRepository.deleteById(bno);
+    }
+
 }
 
 
