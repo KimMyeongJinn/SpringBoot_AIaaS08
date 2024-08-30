@@ -198,6 +198,35 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
 
         return new PageImpl<>(dtoList, pageable, count);
     }
+
+    @Override
+    public Page<BoardListReplyCountDTO> searchWithAll(String[] types, String keyword, Pageable pageable) {
+
+        QBoard board = QBoard.board;
+        QReply reply = QReply.reply;
+
+        JPQLQuery<Board> boardJPQLQuery = from(board);
+        boardJPQLQuery.leftJoin(reply).on(reply.board.eq(board));
+
+        getQuerydsl().applyPagination(pageable, boardJPQLQuery);
+
+        List<Board> boardList = boardJPQLQuery.fetch();
+
+        /* Board 게시물마다 연결된 자식 목록을 가져오므로
+        데이터베이스에 많은 요청이 들어가게 된다.
+        이것을 'N+1'문제라고 한다.
+        성능 저하 문제
+
+        이것을 해결하는 문제는 @BatchSize를 정해주는 것이다.
+        * */
+        boardList.forEach(board1 -> {
+            System.out.println(board1.getBno());
+            System.out.println(board1.getImageSet());
+            System.out.println("------------------------------");
+        });
+
+        return null;
+    }
 }
 
 

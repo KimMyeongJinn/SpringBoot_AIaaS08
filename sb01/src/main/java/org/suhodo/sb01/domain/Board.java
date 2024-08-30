@@ -1,6 +1,7 @@
 package org.suhodo.sb01.domain;
 
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -45,6 +46,12 @@ public class Board extends BaseEntity{
        왜냐하면 부모가 없다고 자식 데이터를 삭제하는 문제는 신중해야 하기 때문에
 
        orphanRemoval = true 까지 추가해야 진짜 삭제가 된다.
+
+       @BatchSize(size = 20)
+       1개의 게시물당 종속된 자식을 모두 조회하게 되므로 성능저하가 일어난다.
+       이것을 'N+1'문제라고 한다.
+       이 때 자식을 여러 개를 모아서 한번에 실행하게 할 수 있다.
+       위처럼 size를 지정해주면 모아서 처리하므로 성능저하를 막을 수 있다.
     * */
     @OneToMany(mappedBy = "board",
                 cascade = {CascadeType.ALL},
@@ -52,6 +59,7 @@ public class Board extends BaseEntity{
                 orphanRemoval = true
                 )
     @Builder.Default
+    @BatchSize(size = 20)
     private Set<BoardImage> imageSet = new HashSet<>();
 
     public void addImage(String uuid, String fileName){
