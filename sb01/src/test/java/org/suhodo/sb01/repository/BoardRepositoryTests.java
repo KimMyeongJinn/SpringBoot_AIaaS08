@@ -215,8 +215,15 @@ public class BoardRepositoryTests {
     public void testRemoveAll(){
         Long bno = 311L;
 
+        // 댓글은 reply에서 board를 참조하는 @ManyToOne관계이므로
+        // 부모인 Board를 삭제한다고 자동으로 reply가 삭제되지 않는다.
+        // 그러므로 부모인 Board의 행을 삭제하기 위해서는
+        // 자식인 reply의 행이 먼저 삭제되어야 한다.
         replyRepository.deleteByBoard_Bno(bno);
 
+        // BoardImage는 Board에서 @OneToMany설정이 되어 있고
+        // Cascade.ALL, orphanRemoval = true 설정을 했으므로
+        // Board의 행이 삭제되면 자식인 BoardImage의 행도 자동으로 삭제된다.
         boardRepository.deleteById(bno);
     }
 
