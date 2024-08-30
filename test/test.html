@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body>
+    <div class="container mt-3">
+      <h3>Fading Modal Example</h3>
+      <p>Click on the button to open the modal.</p>
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#myModal"
+      >
+        Open modal
+      </button>
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Modal Heading</h4>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            넓게는 산앵도나무속(Vaccinium spp.)에 속한 여러 종들 중 검푸른
+            열매를 맺는 대부분의 식물들을 뭉뚱그려 블루베리라고 부르며,
+            동아시아가 원산지인 들쭉나무와 정금나무 및 지포나무, 유럽의
+            빌베리(bilberry)도 블루베리의 일종으로 간주된다. 물론 산앵도나무나
+            크랜베리(넌출월귤), 월귤(링곤베리)처럼 열매가 빨간 종들은 당연히
+            제외된다. 좁은 의미의 블루베리는 북아메리카가 원산지인 재배종들을
+            가리킨다. 다만 이러한 재배종들도 학명 자체가 다른 경우가 많다. 링크
+            이름은 블루베리(Blueberry)지만, 파란색이 아닌 검은색에 가까운 어두운
+            남보라색이다.[2] 게다가 안토시아닌 성분이 껍질에 고농도로 축적될수록
+            더욱 검은색[3]에 가까워지기 때문에 이조차도 케바케다. 사실 수확 전
+            조금 덜 익은 상태에선 확실하게 파란색에 가깝긴 한데[4] 익어서
+            수확되는 것들 + 냉동들은 죄다 어두운 남보라색~검은색이 된다. 즉
+            안토시아닌이 더 농축된다. 참고로 자르면 포도와 유사하게 생겼는데
+            녹색의 속살이 들어있다. 물론 품종에 따라 보라색과 검은색의 속살이
+            들어있기도 하다. 또한 100g당 식이섬유가 4.5g이 있고 칼슘, 철, 망간
+            등을 많이 함유한다.
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-3">
+      <h2>Card Image</h2>
+      <p>Image at the top (card-img-top):</p>
+      <div class="card" style="width: 400px">
+        <img
+          class="card-img-top"
+          src="https://isplus.com/data/isp/image/2023/08/03/isp20230803000109.600x.0.jpg"
+          alt="Card image"
+          style="width: 100%"
+        />
+        <div class="card-body">
+          <h4 class="card-title">John Doe</h4>
+          <p class="card-text">
+            Some example text some example text. John Doe is an architect and
+            engineer
+          </p>
+          <a href="#" class="btn btn-primary">See Profile</a>
+        </div>
+      </div>
+      <br />
+
+      <p>Image at the bottom (card-img-bottom):</p>
+      <div class="card" style="width: 400px">
+        <div class="card-body">
+          <h4 class="card-title">Jane Doe</h4>
+          <p class="card-text">
+            Some example text some example text. Jane Doe is an architect and
+            engineer
+          </p>
+          <a href="#" class="btn btn-primary">See Profile</a>
+        </div>
+        <img
+          class="card-img-bottom"
+          src="https://www.harpersbazaar.co.kr/resources/online/online_image/2024/03/12/ade57ef1-2d60-4d9c-85b0-28c9fa1d2a6d.jpg"
+          alt="Card image"
+          style="width: 100%"
+        />
+      </div>
+    </div>
+    <!-- Carousel -->
+    <div id="demo" class="carousel slide" data-bs-ride="carousel">
+      <!-- Indicators/dots -->
+      <div class="carousel-indicators">
+        <button
+          type="button"
+          data-bs-target="#demo"
+          data-bs-slide-to="0"
+          class="active"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#demo"
+          data-bs-slide-to="1"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#demo"
+          data-bs-slide-to="2"
+        ></button>
+      </div>
+
+      <!-- The slideshow/carousel -->
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img
+            src="https://mblogthumb-phinf.pstatic.net/MjAyMDAzMTVfNjMg/MDAxNTg0MjU5ODgyODE0.BNiJyLPjSh2p7IHumBF9sBicKqVGHwvZsmX1uSiKES0g.r-K3xCX-_OfaxX3fTEMjwH_bfFIgbQNqjqHIH_wRWC4g.JPEG.se___ovo/%EC%BB%B4%ED%93%A8%ED%84%B0%EB%B0%B0%EA%B2%BD%ED%99%94%EB%A9%B4%EC%9E%90%EC%97%B001.jpg?type=w800"
+            alt="Los Angeles"
+            class="d-block"
+            style="width: 100%"
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            src="https://mblogthumb-phinf.pstatic.net/MjAyMDAzMTVfMjY0/MDAxNTg0MjU5ODgyNTQ5.Uwz1guxMV9SVXLW7iDEDmtlbVstumgn84AeSu42rjyMg.WcCNq2ZO5hFqcV8y9RbyiBNCW0TNSXAZk5co7rpnv7Qg.JPEG.se___ovo/%EC%BB%B4%ED%93%A8%ED%84%B0%EB%B0%B0%EA%B2%BD%ED%99%94%EB%A9%B4%EC%9E%90%EC%97%B002.jpg?type=w800"
+            alt="Chicago"
+            class="d-block"
+            style="width: 100%"
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            src="https://mblogthumb-phinf.pstatic.net/MjAyMDAzMTVfMTUg/MDAxNTg0MjU5ODgyOTk3.WC1Za0xU37sXxO_LTLaTDFb2ggu27gd8Un6VEExASD8g.ui7GID1hFBsq9fp-k5QvuHlN4zWEpWEdxv75bgyOPhcg.JPEG.se___ovo/%EC%BB%B4%ED%93%A8%ED%84%B0%EB%B0%B0%EA%B2%BD%ED%99%94%EB%A9%B4%EC%9E%90%EC%97%B004.jpg?type=w800"
+            alt="New York"
+            class="d-block"
+            style="width: 100%"
+          />
+        </div>
+      </div>
+
+      <!-- Left and right controls/icons -->
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#demo"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#demo"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+
+    <div class="container-fluid mt-3">
+      <h3>Carousel Example</h3>
+      <p>
+        The following example shows how to create a basic carousel with
+        indicators and controls.
+      </p>
+    </div>
+  </body>
+</html>
