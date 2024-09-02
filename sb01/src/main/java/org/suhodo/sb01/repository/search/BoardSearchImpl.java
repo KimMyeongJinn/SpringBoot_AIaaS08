@@ -1,6 +1,7 @@
 package org.suhodo.sb01.repository.search;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
 import lombok.extern.log4j.Log4j2;
@@ -11,9 +12,11 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.suhodo.sb01.domain.Board;
 import org.suhodo.sb01.domain.QBoard;
 import org.suhodo.sb01.domain.QReply;
+import org.suhodo.sb01.dto.BoardListAllDTO;
 import org.suhodo.sb01.dto.BoardListReplyCountDTO;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /* BoardSearch인터페이스를 구현하는 클래스로
 반드시 '인터페이스명' + Impl이어야 한다.
@@ -200,33 +203,78 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
     }
 
     @Override
-    public Page<BoardListReplyCountDTO> searchWithAll(String[] types, String keyword, Pageable pageable) {
-
+    public Page<BoardListAllDTO> searchWithAll(String[] types, String keyword, Pageable pageable) {
         QBoard board = QBoard.board;
         QReply reply = QReply.reply;
 
+        /* FROM board
+           LEFT JOIN reply ON reply.bno=board.bno
+        * */
         JPQLQuery<Board> boardJPQLQuery = from(board);
         boardJPQLQuery.leftJoin(reply).on(reply.board.eq(board));
 
+        // GROUP BY board.bno
+        boardJPQLQuery.groupBy(board);
+
+        // ORDER BY limit :skipRow, :getRows
         getQuerydsl().applyPagination(pageable, boardJPQLQuery);
 
-        List<Board> boardList = boardJPQLQuery.fetch();
+        // SELECT board.bno, ..., COUNT(reply)
+        JPQLQuery<Tuple> tupleJPQLQuery = boardJPQLQuery.select(board, reply.countDistinct());
 
-        /* Board 게시물마다 연결된 자식 목록을 가져오므로
-        데이터베이스에 많은 요청이 들어가게 된다.
-        이것을 'N+1'문제라고 한다.
-        성능 저하 문제
+        List<Tuple> tupleList = tupleJPQLQuery.fetch();
 
-        이것을 해결하는 문제는 @BatchSize를 정해주는 것이다.
-        * */
-        boardList.forEach(board1 -> {
-            System.out.println(board1.getBno());
-            System.out.println(board1.getImageSet());
-            System.out.println("------------------------------");
-        });
+        List<BoardListAllDTO> dtoList = tupleList.stream().map(tuple -> {
 
-        return null;
+            Board board1 = (Board)tuple.get(board);             // Tuple의 1번째 요소 꺼내기
+            long replyCount = tuple.get(1, Long.class);       // Tuple의 인덱스 1요소(2번째 요소) 꺼내기
+
+            BoardListAllDTO dto = BoardListAllDTO.builder()
+                    .bno(board1.getBno())
+                    .title(board1.getTitle())
+                    .writer(board1.getWriter())
+                    .regDate(board1.getRegDate())
+                    .replyCount(replyCount)
+                    .build();
+
+            return dto;
+
+        }).collect(Collectors.toList());
+
+        long totalCount = boardJPQLQuery.fetchCount();
+
+        return new PageImpl<>(dtoList, pageable, totalCount);
     }
+
+
+//    @Override
+//    public Page<BoardListReplyCountDTO> searchWithAll(String[] types, String keyword, Pageable pageable) {
+//
+//        QBoard board = QBoard.board;
+//        QReply reply = QReply.reply;
+//
+//        JPQLQuery<Board> boardJPQLQuery = from(board);
+//        boardJPQLQuery.leftJoin(reply).on(reply.board.eq(board));
+//
+//        getQuerydsl().applyPagination(pageable, boardJPQLQuery);
+//
+//        List<Board> boardList = boardJPQLQuery.fetch();
+//
+//        /* Board 게시물마다 연결된 자식 목록을 가져오므로
+//        데이터베이스에 많은 요청이 들어가게 된다.
+//        이것을 'N+1'문제라고 한다.
+//        성능 저하 문제
+//
+//        이것을 해결하는 문제는 @BatchSize를 정해주는 것이다.
+//        * */
+//        boardList.forEach(board1 -> {
+//            System.out.println(board1.getBno());
+//            System.out.println(board1.getImageSet());
+//            System.out.println("------------------------------");
+//        });
+//
+//        return null;
+//    }
 }
 
 
