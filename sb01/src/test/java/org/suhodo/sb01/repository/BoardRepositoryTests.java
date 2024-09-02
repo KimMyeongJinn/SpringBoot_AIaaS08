@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 import org.suhodo.sb01.domain.Board;
+import org.suhodo.sb01.dto.BoardListAllDTO;
 import org.suhodo.sb01.dto.BoardListReplyCountDTO;
 
 import java.util.List;
@@ -247,11 +248,24 @@ public class BoardRepositoryTests {
         }
     }
 
+//    @Transactional
+//    @Test
+//    public void testSearchImageReplyCount(){
+//        Pageable pageable = PageRequest.of(1, 10, Sort.by("bno").descending());
+//        boardRepository.searchWithAll(null, null, pageable);
+//    }
+
     @Transactional
     @Test
     public void testSearchImageReplyCount(){
-        Pageable pageable = PageRequest.of(1, 10, Sort.by("bno").descending());
-        boardRepository.searchWithAll(null, null, pageable);
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending());
+
+        Page<BoardListAllDTO> result = boardRepository.searchWithAll(null, null, pageable);
+
+        log.info("-----------------------------");
+        log.info(result.getTotalElements());
+
+        result.getContent().forEach(boardListAllDTO -> log.info(boardListAllDTO));
     }
 
 }
