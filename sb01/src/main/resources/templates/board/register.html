@@ -97,4 +97,65 @@
         }
         alert(errorMsg);
     }
+
+    // 파일 업로드 모달 창 띄우기 이벤트 처리
+    const uploadModal = new bootstrap.Modal(document.querySelector(".uploadModal"));
+
+    document.querySelector('.uploadFileBtn').addEventListener("click", function(e){
+        e.stopPropagation();
+        e.preventDefault();
+        uploadModal.show();
+    }, false);
+
+    // 모달 창 닫기
+    document.querySelector('.closeUploadBtn').addEventListener("click", function(e) {
+        uploadModal.hide();
+    }, false);
+
+    // 선택한 파일들 서버로 업로드 하기
+    document.querySelector('.uploadBtn').addEventListener("click", function(e){
+        const formObj = new FormData();
+
+        const fileInput = document.querySelector("input[name='files']");
+
+        console.log(fileInput.files);
+
+        const files = fileInput.files;
+
+        for(let i=0;i<files.length;i++)
+            formObj.append("files", files[i]);
+
+        uploadToServer(formObj).then(result => {
+            console.log(result);
+            for(const uploadResult of result)
+                showUploadFile(uploadResult);
+
+            uploadModal.hide();
+        }).catch(e => {
+            uploadModal.hide();
+        })
+
+    }, false);
+
+    function showUploadFile({uuid, fileName, link}){
+
+    }
+
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
